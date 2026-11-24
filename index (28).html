@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guia do time | TIM Controle Cartão de TODOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2F9; --surface:#FFFFFF; --surface-2:#E3E9F5; --ink:#0D1A3A; --muted:#55617D;
+  --blue:#1546D1; --blue-deep:#0B2A86; --green:#14975A; --green-soft:#DDF3E7;
+  --amber:#B86E00; --amber-soft:#FFF1D9; --red:#C2263A; --red-soft:#FCE3E6;
+  --line:#CCD5E6; --shadow:0 1px 0 rgba(13,26,58,.06);
+  --display:'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --body:'Figtree', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#08112A; --surface:#101C3D; --surface-2:#18275A; --ink:#EAF0FF; --muted:#9EABCB;
+    --blue:#6B93FF; --blue-deep:#0E2468; --green:#3CCB86; --green-soft:#0F3B2A;
+    --amber:#FFB547; --amber-soft:#3A2A0C; --red:#FF7085; --red-soft:#40141C; --line:#26366A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08112A; --surface:#101C3D; --surface-2:#18275A; --ink:#EAF0FF; --muted:#9EABCB;
+  --blue:#6B93FF; --blue-deep:#0E2468; --green:#3CCB86; --green-soft:#0F3B2A;
+  --amber:#FFB547; --amber-soft:#3A2A0C; --red:#FF7085; --red-soft:#40141C; --line:#26366A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+/* Hero */
+.hero{background:var(--blue-deep);color:#fff;padding:28px 0 34px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;border:38px solid rgba(255,255,255,.06)}
+.brand{font-weight:600;font-size:14px;opacity:.85;margin:0 0 18px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,7vw,46px);line-height:1.02;letter-spacing:-.02em;margin:0 0 20px;max-width:14ch}
+.ticket{display:flex;align-items:stretch;background:#fff;color:#0D1A3A;border-radius:18px;max-width:440px;position:relative}
+.ticket .gb{padding:14px 18px;border-right:2px dashed #C9D3EA;display:flex;flex-direction:column;justify-content:center}
+.ticket .gb strong{font-family:var(--display);font-size:40px;line-height:1;font-weight:800}
+.ticket .gb span{font-size:13px;color:#55617D}
+.ticket .price{padding:14px 18px;flex:1}
+.ticket .price small{display:block;font-size:13px;color:#55617D}
+.ticket .price b{font-family:var(--display);font-size:40px;line-height:1;font-weight:800;color:#1546D1}
+.ticket .price b sup{font-size:18px}
+.ticket .price em{font-style:normal;font-size:13px;color:#14975A;font-weight:600;display:block;margin-top:2px}
+.perks{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding:0;list-style:none}
+.perks li{font-size:13px;font-weight:600;background:rgba(255,255,255,.12);padding:6px 11px;border-radius:999px}
+
+/* Tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:8px;padding-bottom:8px}
+.tabs .wrap::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:0;background:transparent;padding:9px 14px;border-radius:999px;font-weight:600;font-size:15px;color:var(--muted);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+main{padding:24px 0 60px}
+.panel[hidden]{display:none}
+h2{font-family:var(--display);font-size:28px;line-height:1.1;letter-spacing:-.01em;margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 20px;max-width:60ch}
+
+/* Simulador */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+.progress{display:flex;gap:6px;margin-bottom:18px}
+.progress i{height:5px;flex:1;border-radius:4px;background:var(--surface-2)}
+.progress i.on{background:var(--blue)}
+.q{font-family:var(--display);font-size:22px;font-weight:700;line-height:1.2;margin:0 0 6px}
+.hint{color:var(--muted);font-size:14px;margin:0 0 16px}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--bg);padding:14px 16px;border-radius:14px;cursor:pointer;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.opt:hover{border-color:var(--blue)}
+.opt span{font-weight:400;font-size:13px;color:var(--muted)}
+.result{border-radius:16px;padding:18px;margin-bottom:14px}
+.result.ok{background:var(--green-soft)}
+.result.warn{background:var(--amber-soft)}
+.result.no{background:var(--red-soft)}
+.result h3{font-family:var(--display);margin:0 0 6px;font-size:22px;line-height:1.15}
+.result.ok h3{color:var(--green)} .result.warn h3{color:var(--amber)} .result.no h3{color:var(--red)}
+.result p{margin:0 0 8px}
+.result ul{margin:6px 0 0;padding-left:18px}
+.result li{margin:4px 0}
+.say{background:var(--surface-2);border-radius:14px;padding:14px 16px;margin-top:6px}
+.say b{display:block;font-size:13px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;background:var(--ink);color:var(--bg)}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+
+/* Oferta */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.feat h3{margin:0 0 4px;font-size:17px}
+.feat p{margin:0;color:var(--muted);font-size:15px}
+.feat .big{font-family:var(--display);font-size:30px;font-weight:800;color:var(--blue);line-height:1.1;margin-bottom:4px}
+.notice{margin-top:16px;border-left:4px solid var(--amber);background:var(--amber-soft);padding:14px 16px;border-radius:0 14px 14px 0}
+.notice b{color:var(--amber)}
+.notice p{margin:0}
+.notice p+p{margin-top:8px}
+.cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+@media (max-width:560px){.cols2{grid-template-columns:1fr}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.box h3{margin:0 0 8px;font-size:17px}
+.box ul{margin:0;padding-left:18px;color:var(--muted)}
+.box li{margin:5px 0}
+.box a{color:var(--blue);font-weight:600}
+
+/* Objeções */
+.obj{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
+.obj button{width:100%;text-align:left;border:0;background:transparent;padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.obj button q{font-family:var(--display);font-size:19px;font-weight:700;quotes:"“" "”"}
+.obj .plus{flex:0 0 28px;height:28px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-weight:700;transition:transform .2s}
+.obj[open-state="1"] .plus{transform:rotate(45deg)}
+.obj .ans{padding:0 18px 18px;display:none}
+.obj[open-state="1"] .ans{display:block}
+.ans .say{margin-top:0}
+.ans .tip{font-size:14px;color:var(--muted);margin:10px 0 0}
+
+/* Passos */
+.stepper{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.dot{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:transparent;font-weight:700;cursor:pointer;font-size:14px}
+.dot.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.dot.done{background:var(--surface-2)}
+.step h3{font-family:var(--display);font-size:24px;margin:0 0 10px;line-height:1.15}
+.step ul{margin:0;padding-left:18px}
+.step li{margin:6px 0}
+.path{display:inline-block;background:var(--surface-2);padding:2px 8px;border-radius:6px;font-weight:600;font-size:14px}
+.step .alert{margin-top:12px;font-size:15px;background:var(--amber-soft);padding:10px 12px;border-radius:10px}
+
+/* Quiz */
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+.qopt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--bg);padding:13px 15px;border-radius:12px;margin-bottom:9px;cursor:pointer;font-size:16px}
+.qopt.right{border-color:var(--green);background:var(--green-soft)}
+.qopt.wrong{border-color:var(--red);background:var(--red-soft)}
+.qopt:disabled{cursor:default}
+.explain{font-size:15px;margin-top:6px;padding:12px 14px;border-radius:12px;background:var(--surface-2)}
+.score{font-family:var(--display);font-size:64px;font-weight:800;color:var(--blue);line-height:1;margin:6px 0}
+
+/* FAQ */
+.search{width:100%;padding:13px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;margin-bottom:14px}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;padding:0 16px}
+.faq summary{cursor:pointer;padding:14px 0;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-weight:700;color:var(--muted)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 14px;color:var(--muted)}
+.empty{color:var(--muted);text-align:center;padding:20px}
+
+footer{color:var(--muted);font-size:13px;text-align:center;padding:0 18px 30px}
+
+/* Black Friday */
+.bf-strip{display:inline-flex;align-items:center;gap:8px;background:#E4002B;color:#fff;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin:0 0 14px}
+.bf-strip i{font-style:normal;background:#fff;color:#E4002B;border-radius:999px;padding:1px 8px;letter-spacing:0}
+.ticket .gb small{font-size:12px;font-weight:700;color:#E4002B;letter-spacing:.04em}
+.mix{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.mix span{font-size:12.5px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.14)}
+.mix span b{color:#7CF0A8}
+.bfcard{background:linear-gradient(120deg,#0B1A4F 0%,#123A9E 55%,#11A85A 100%);color:#fff;border-radius:20px;padding:20px;position:relative;overflow:hidden;margin-bottom:14px}
+.bfcard::after{content:"";position:absolute;right:-60px;bottom:-70px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08)}
+.bfcard h3{font-family:var(--display);font-size:26px;line-height:1.08;margin:6px 0 4px}
+.bfcard p{margin:0;opacity:.9}
+.stack{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;position:relative;z-index:1}
+.stack div{background:rgba(255,255,255,.12);border-radius:14px;padding:10px 12px}
+.stack b{font-family:var(--display);font-size:26px;display:block;line-height:1}
+.stack span{font-size:12.5px;opacity:.9}
+@media (max-width:480px){.stack{grid-template-columns:1fr}}
+
+/* Meta do dia */
+.meta{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+.meta-top{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.ring{--p:0;width:150px;height:150px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  background:conic-gradient(var(--green) calc(var(--p)*1%),var(--surface-2) 0)}
+.ring div{width:118px;height:118px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
+.ring strong{font-family:var(--display);font-size:44px;line-height:1;font-weight:800}
+.ring span{font-size:13px;color:var(--muted);display:block}
+.meta-info{flex:1;min-width:220px}
+.meta-info .q{margin-bottom:4px}
+.pace{font-size:15px;color:var(--muted);margin:0}
+.pace b{color:var(--ink)}
+.addrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+@media (max-width:520px){.addrow{grid-template-columns:1fr}}
+.add{border:0;border-radius:14px;padding:14px 10px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff;font-size:15px}
+.add small{display:block;font-weight:500;opacity:.85;font-size:12.5px}
+.add.port{background:var(--blue-deep)} .add.mig{background:var(--green)}
+.tally{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tally span{font-size:13px;font-weight:600;background:var(--surface-2);border-radius:999px;padding:5px 11px}
+.settings{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px;font-size:14px;color:var(--muted)}
+.settings input{width:86px;padding:7px 9px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.done-banner{display:none;margin-top:14px;background:var(--green-soft);color:var(--green);font-weight:800;font-family:var(--display);font-size:20px;padding:12px 16px;border-radius:14px;text-align:center}
+.done-banner.on{display:block}
+.check{list-style:none;padding:0;margin:0}
+.check li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.check li:last-child{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex:0 0 auto}
+
+/* Calculadora */
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+.field{display:block;margin-bottom:14px}
+.field>span{display:block;font-weight:700;margin-bottom:6px}
+.field input[type=number]{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:18px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1.5px solid var(--line);background:var(--bg);padding:9px 14px;border-radius:999px;cursor:pointer;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.calc-out{margin-top:6px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--surface-2);border-radius:14px;padding:12px 14px}
+.kpi b{font-family:var(--display);font-size:28px;display:block;line-height:1.1}
+.kpi span{font-size:13px;color:var(--muted)}
+.kpi.good b{color:var(--green)} .kpi.blue b{color:var(--blue)}
+
+/* Abordagem */
+.script{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:10px}
+.script header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.script h3{margin:0;font-size:17px}
+.script .tagc{font-size:12px;font-weight:700;color:var(--blue);background:var(--surface-2);padding:3px 9px;border-radius:999px}
+.script p.txt{margin:0;white-space:pre-line;background:var(--bg);border-radius:12px;padding:12px 14px}
+.copy{border:0;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer;background:var(--ink);color:var(--bg);font-size:14px;flex:0 0 auto}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.qs{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.qs li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-weight:600}
+.qs li small{display:block;font-weight:400;color:var(--muted);font-size:13.5px}
+h2.sub{font-size:22px;margin-top:26px}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);transform:translate(-50%,30px);opacity:0;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-weight:700;transition:.25s;z-index:50;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.tab .new{font-size:10px;font-weight:800;background:#E4002B;color:#fff;border-radius:999px;padding:1px 6px;margin-left:5px;vertical-align:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="brand">TIM + Cartão de TODOS · Unidade Campo Grande</p>
+    <p class="bf-strip">TIM Black Friday <i>Oferta Indecente</i></p>
+    <h1>Guia do time TIM Controle</h1>
+    <div class="ticket" aria-label="Até 36 GB por R$ 34,99 por mês">
+      <div class="gb"><small>ATÉ</small><strong>36GB</strong><span>+ redes sociais</span></div>
+      <div class="price"><small>por mês, no cartão de crédito</small><b>R$ 34<sup>,99</sup></b><em>R$ 3,50 de cashback a partir do 2º mês</em></div>
+    </div>
+    <div class="mix" aria-label="Composição dos 36GB">
+      <span><b>20GB</b> do plano</span><span><b>+10GB</b> bônus promo</span><span><b>+6GB</b> bônus especial</span><span>bônus por 12 meses</span>
+    </div>
+    <ul class="perks">
+      <li>Ligações e SMS ilimitados</li>
+      <li>Sem fidelidade</li>
+      <li>Até 5 linhas por CPF</li>
+    </ul>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Seções">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-tab="hoje">Meta do dia<span class="new">NOVO</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="sim">Simulador</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="calc">Calculadora<span class="new">NOVO</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="abord">Abordagem<span class="new">NOVO</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="oferta">A oferta</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="obj">Objeções</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="passos">Passo a passo</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="quiz">Quiz</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="faq">Dúvidas</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="premiado">Time Premiado</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- META DO DIA -->
+  <section class="panel" id="hoje" role="tabpanel">
+    <div class="bfcard">
+      <p class="bf-strip" style="margin:0">Black Friday TIM</p>
+      <h3>Até 36GB por R$ 34,99/mês</h3>
+      <p>Oferta indecente do TIM Controle, exclusiva para clientes Cartão de TODOS. Não vai ficar de fora, né?</p>
+      <div class="stack">
+        <div><b>20GB</b><span>internet do plano</span></div>
+        <div><b>+10GB</b><span>bônus promo por 12 meses</span></div>
+        <div><b>+6GB</b><span>bônus especial por 12 meses</span></div>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div class="meta-top">
+        <div class="ring" id="ring" role="img" aria-label="Progresso da meta"><div><span style="display:block"><strong id="mCount">0</strong><span id="mGoal">de 10 vendas</span></span></div></div>
+        <div class="meta-info">
+          <p class="q" id="mTitle">Bora para a primeira venda!</p>
+          <p class="pace" id="mPace"></p>
+        </div>
+      </div>
+      <div class="addrow">
+        <button class="add" data-k="nova">+1 Nova linha<small>ativação com chip ou eSIM</small></button>
+        <button class="add port" data-k="port">+1 Portabilidade<small>traz o número de outra operadora</small></button>
+        <button class="add mig" data-k="mig">+1 Migração Pré<small>TIM Pré vira Controle</small></button>
+      </div>
+      <div class="tally" id="mTally"></div>
+      <div class="done-banner" id="mDone">META BATIDA! Agora é recorde.</div>
+      <div class="settings">
+        <label>Meta do dia <input type="number" id="mGoalIn" min="1" max="99" value="10"></label>
+        <label>Encerramento <input type="time" id="mEnd" value="18:00" style="width:110px"></label>
+        <button class="btn ghost" id="mUndo" style="padding:8px 12px">Desfazer última</button>
+      </div>
+      <p class="hint" style="margin:12px 0 0">A contagem fica salva neste aparelho e zera sozinha no dia seguinte. O número oficial é o do relatório do CTN.</p>
+    </div>
+
+    <h2 class="sub">Antes do primeiro atendimento</h2>
+    <p class="lead">Checklist rápido para não perder venda por detalhe.</p>
+    <div class="box">
+      <ul class="check" id="dayCheck"></ul>
+    </div>
+
+    <h2 class="sub">A regra de ouro de hoje</h2>
+    <div class="notice" style="margin-top:8px">
+      <p><b>1 oferta em cada atendimento.</b> Recepção, telefone, WhatsApp, refiliação, retenção: todo cliente ativo do Cartão de TODOS pode ouvir a oferta. Quem não oferece, não vende.</p>
+    </div>
+  </section>
+
+  <!-- CALCULADORA -->
+  <section class="panel" id="calc" role="tabpanel" hidden>
+    <h2>Quanto ele economiza?</h2>
+    <p class="lead">Preencha com o cliente. A comparação com o que ele paga hoje é o argumento que mais fecha venda.</p>
+    <div class="calc">
+      <div class="field"><span>Hoje ele usa</span>
+        <div class="seg" id="cType">
+          <button aria-pressed="true" data-v="recarga">Pré-pago (recarga)</button>
+          <button aria-pressed="false" data-v="plano">Plano de outra operadora</button>
+          <button aria-pressed="false" data-v="nenhum">Não tem linha</button>
+        </div>
+      </div>
+      <label class="field" id="cSpendWrap"><span id="cSpendLbl">Quanto coloca de recarga por mês? (R$)</span>
+        <input type="number" id="cSpend" inputmode="decimal" min="0" step="1" placeholder="Ex.: 40"></label>
+      <label class="field" id="cGbWrap"><span>Quantos GB de internet tem hoje?</span>
+        <input type="number" id="cGb" inputmode="decimal" min="0" step="1" placeholder="Ex.: 8"></label>
+      <div class="calc-out" id="cOut"></div>
+      <div class="say" id="cSay" style="margin-top:12px"></div>
+      <div class="row"><button class="btn" id="cCopy">Copiar argumento</button><button class="btn ghost" id="cClear">Limpar</button></div>
+    </div>
+    <p class="hint" style="margin-top:10px">Cálculo do 1º ano: 12 × R$ 34,99 menos 11 cashbacks de R$ 3,50 (do 2º ao 12º mês) = R$ 381,38, ou R$ 31,78 por mês em média. Os bônus de 10GB e 6GB valem por 12 meses a partir da ativação.</p>
+  </section>
+
+  <!-- ABORDAGEM -->
+  <section class="panel" id="abord" role="tabpanel" hidden>
+    <h2>Como puxar o assunto</h2>
+    <p class="lead">Roteiros prontos para cada canal. Toque em Copiar e cole no WhatsApp ou use como base na fala.</p>
+    <div class="filters seg" id="sFilter">
+      <button aria-pressed="true" data-v="todos">Todos</button>
+      <button aria-pressed="false" data-v="presencial">Presencial</button>
+      <button aria-pressed="false" data-v="telefone">Telefone</button>
+      <button aria-pressed="false" data-v="whatsapp">WhatsApp</button>
+    </div>
+    <div id="sList"></div>
+
+    <h2 class="sub">Perguntas que abrem a venda</h2>
+    <p class="lead">Faça uma delas em todo atendimento. A resposta já mostra o caminho.</p>
+    <ul class="qs" id="qsList"></ul>
+
+    <h2 class="sub">Hora de fechar</h2>
+    <div class="cols2" style="margin-top:8px">
+      <div class="box"><h3>Sinais de interesse</h3><ul>
+        <li>Pergunta preço, cobertura ou como funciona o chip</li>
+        <li>Fala quanto gasta hoje ou reclama da recarga</li>
+        <li>Pergunta se pode ser para outra pessoa da família</li>
+      </ul></div>
+      <div class="box"><h3>Frases de fechamento</h3><ul>
+        <li>"Vamos ativar agora? Me confirma seu CPF."</li>
+        <li>"Prefere chip ou eSIM?"</li>
+        <li>"Em poucos minutos você sai daqui com a linha funcionando."</li>
+      </ul></div>
+    </div>
+    <div class="notice"><p><b>Não fechou na hora?</b> Anote nome, telefone e o que ele paga hoje. Retorne no mesmo dia pelo WhatsApp com o roteiro de retorno. Venda adiada para amanhã costuma esfriar.</p></div>
+  </section>
+
+  <!-- SIMULADOR -->
+  <section class="panel" id="sim" role="tabpanel" hidden>
+    <h2>Qual oferta cabe nesse cliente?</h2>
+    <p class="lead">Responda junto com o cliente. Em poucos cliques você sabe se ele pode contratar, por qual caminho e o que falar.</p>
+    <div class="sim" id="simBox" aria-live="polite"></div>
+  </section>
+
+  <!-- OFERTA -->
+  <section class="panel" id="oferta" role="tabpanel" hidden>
+    <h2>O que o cliente leva</h2>
+    <p class="lead">Plano exclusivo para quem é Cartão de TODOS. Não é vendido nos canais da TIM, só nas nossas unidades. Na Black Friday, a internet chega a 36GB pelo mesmo preço.</p>
+    <div class="grid">
+      <div class="feat"><div class="big">Até 36GB</div><h3>Internet para usar como quiser</h3><p>20GB do plano + 10GB de bônus promo + 6GB de bônus especial. Os bônus valem por 12 meses a partir da ativação.</p></div>
+      <div class="feat"><div class="big">Ilimitado</div><h3>WhatsApp, Instagram, Facebook e X</h3><p>Não descontam da internet. Ficam fora: chamadas de voz e vídeo no WhatsApp, lives, IGTV e bate-papo por vídeo no Instagram e Facebook.</p></div>
+      <div class="feat"><div class="big">Ilimitado</div><h3>Ligações e SMS</h3><p>Para qualquer operadora do Brasil usando o código 41.</p></div>
+      <div class="feat"><div class="big">R$ 3,50</div><h3>Cashback todo mês</h3><p>Na Wallet do app Cartão de TODOS, a partir da 2ª mensalidade paga.</p></div>
+      <div class="feat"><div class="big">0</div><h3>Fidelidade</h3><p>Cancela quando quiser, sem multa.</p></div>
+      <div class="feat"><div class="big">+ extras</div><h3>AyaBooks e +Recompensas Light</h3><p>Um e-book exclusivo por mês, pontos e bônus.</p></div>
+    </div>
+
+    <div class="cols2">
+      <div class="box">
+        <h3>Quem pode contratar</h3>
+        <ul>
+          <li>Titular ou dependente com matrícula ativa</li>
+          <li>Maior de 18 anos ou emancipado</li>
+          <li>Pessoa física (CPF). Não vale para CNPJ</li>
+          <li>Com cartão de crédito, próprio ou de terceiro</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Regras da migração TIM Pré</h3>
+        <ul>
+          <li>Somente linha pré-paga</li>
+          <li>Linha ativa na TIM</li>
+          <li>Mesmo CPF em que a linha pré foi ativada</li>
+          <li>Não usa chip novo: o chip dele vira controle</li>
+          <li>Confirme o número da linha com o cliente antes de digitar</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Regras da portabilidade</h3>
+        <ul>
+          <li>Móvel para móvel</li>
+          <li>Linha ativa na operadora atual</li>
+          <li>Mesmo DDD, dentro da área da unidade</li>
+          <li>Mesmo CPF titular da linha</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="notice">
+      <p><b>Black Friday:</b> a oferta pode ser suspensa a qualquer momento pela TIM, sem aviso prévio. Por isso a hora de vender é agora. Use só as peças oficiais da Conexão Marketing (GT7).</p>
+      <p><b>Novidade: a migração de TIM Pré para Controle já está disponível no sistema.</b> O cliente mantém o mesmo número e o mesmo chip. Nenhum chip novo é usado nessa venda.</p>
+      <p>Quem já é TIM Controle não migra de controle para controle. Para esse cliente, ofereça uma linha nova.</p>
+    </div>
+  </section>
+
+  <!-- OBJEÇÕES -->
+  <section class="panel" id="obj" role="tabpanel" hidden>
+    <h2>Quando o cliente disser...</h2>
+    <p class="lead">Toque na frase para ver uma resposta pronta. Adapte ao seu jeito de falar.</p>
+    <div id="objList"></div>
+  </section>
+
+  <!-- PASSOS -->
+  <section class="panel" id="passos" role="tabpanel" hidden>
+    <h2>Venda no CTN, passo a passo</h2>
+    <p class="lead">Do acesso à oferta até o cliente com a linha funcionando.</p>
+    <div class="stepper">
+      <div class="dots" id="dots" aria-label="Passos"></div>
+      <div class="step" id="stepBox" aria-live="polite"></div>
+      <div class="row">
+        <button class="btn ghost" id="prevStep">Voltar</button>
+        <button class="btn" id="nextStep">Próximo passo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="panel" id="quiz" role="tabpanel" hidden>
+    <h2>Teste rápido</h2>
+    <p class="lead">12 perguntas sobre o que mais aparece no atendimento, incluindo a Black Friday. Meta do time: acertar todas.</p>
+    <div class="quiz" id="quizBox" aria-live="polite"></div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="panel" id="faq" role="tabpanel" hidden>
+    <h2>Dúvidas frequentes</h2>
+    <p class="lead">Busque por palavra: cashback, chip, eSIM, cartão, prazo...</p>
+    <input class="search" id="faqSearch" type="search" placeholder="Buscar dúvida" aria-label="Buscar dúvida">
+    <div class="faq" id="faqList"></div>
+  </section>
+
+  <!-- TIME PREMIADO -->
+  <section class="panel" id="premiado" role="tabpanel" hidden>
+    <h2>Time MultiPremiado</h2>
+    <p class="lead">Plataforma de incentivo da TIM para vendedores do varejo. Suas vendas viram pontos que você troca por prêmios. Acesso exclusivo para vendedores ativos do Cartão de TODOS.</p>
+    <div class="grid">
+      <div class="feat"><h3>Lança as vendas</h3><p>Registre suas vendas TIM no app. Elas passam por validação antes de virar pontos.</p></div>
+      <div class="feat"><h3>Acumula pontos</h3><p>Venda validada gera crédito de pontos na sua conta.</p></div>
+      <div class="feat"><h3>Troca por prêmios</h3><p>Use os pontos no marketplace do app.</p></div>
+      <div class="feat"><h3>Campanhas e metas</h3><p>Jornadas de incentivo, controle de metas, notícias e treinamentos online.</p></div>
+    </div>
+    <div class="cols2">
+      <div class="box">
+        <h3>Como acessar</h3>
+        <ul>
+          <li><a href="https://play.google.com/store/apps/details?id=br.com.icons4u.timepremiado" target="_blank" rel="noopener">App para Android</a></li>
+          <li><a href="https://apps.apple.com/br/app/time-premiado/id1541081204" target="_blank" rel="noopener">App para iPhone</a></li>
+          <li><a href="https://timepremiado.app.br" target="_blank" rel="noopener">Site para login</a></li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Precisa de ajuda?</h3>
+        <ul>
+          <li><a href="https://wa.link/r3dij3" target="_blank" rel="noopener">Suporte pelo WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/time_premiado" target="_blank" rel="noopener">Instagram oficial</a></li>
+          <li>Sem acesso? Fale com a coordenação para confirmar seu cadastro como vendedor ativo</li>
+        </ul>
+      </div>
+    </div>
+    <div class="notice">
+      <p><b>Pontuação por venda, campanhas vigentes e catálogo de prêmios</b> ficam dentro do app e mudam ao longo do tempo. Consulte lá antes de prometer qualquer valor ao time.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>Material interno de treinamento da unidade. Fontes: Manual Sistêmico e FAQ TIM Controle Cartão de TODOS (julho/2026), comunicado de migração Pré para Controle (setembro/2026) e peça TIM Black Friday "Oferta Indecente" (novembro/2026). Regulamento: tim.com.br/regulamento-parceria-express.</footer>
+
+<script>
+/* ---------- Tabs ---------- */
+const tabs = document.querySelectorAll('.tab');
+function openTab(id, scroll){
+  const t = [...tabs].find(x => x.dataset.tab === id); if(!t) return;
+  tabs.forEach(x => x.setAttribute('aria-selected', x === t ? 'true' : 'false'));
+  document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== id);
+  t.scrollIntoView({block:'nearest', inline:'center'});
+  if(scroll) window.scrollTo({top: document.querySelector('.tabs').offsetTop, behavior: 'smooth'});
+}
+tabs.forEach(t => t.addEventListener('click', () => {
+  openTab(t.dataset.tab, true);
+  try{ history.replaceState(null, '', '#' + t.dataset.tab); }catch(e){}
+}));
+if(location.hash) openTab(location.hash.slice(1), false);
+
+/* ---------- Simulador ---------- */
+const flow = {
+  start: {q:'O cliente está com a matrícula ativa no Cartão de TODOS?', hint:'O sistema só libera a oferta para matrícula com status Ativo.',
+    opts:[['Sim, está ativa','idade'],['Não, está inativa ou desfiliado','r_inativo'],['Ainda não é cliente','r_novo']]},
+  idade: {q:'Quem vai ficar com a linha tem 18 anos ou mais?', hint:'Pode ser o titular ou um dependente da matrícula.',
+    opts:[['Sim, 18+ ou emancipado','cartao'],['Não, é menor de idade','r_menor']]},
+  cartao: {q:'Tem um cartão de crédito para a cobrança mensal?', hint:'Pode ser o cartão de outra pessoa. A cobrança é recorrente, como streaming.',
+    opts:[['Sim, próprio ou de alguém da família','operadora'],['Não tem cartão de crédito','r_semcartao']]},
+  operadora: {q:'Qual é a operadora do celular dele hoje?', hint:'Pergunte de forma natural: "Seu número hoje é de qual operadora?"',
+    opts:[['TIM','timtipo'],['Claro, Vivo ou outra','ddd'],['Quer só uma linha nova','r_nova']]},
+  timcpf: {q:'A linha pré está ativa e no CPF dele?', hint:'A migração exige o mesmo CPF em que a linha foi ativada.',
+    opts:[['Sim, ativa e no CPF dele','r_migra'],['Está no CPF de outra pessoa','r_timcpf'],['A linha está bloqueada ou cancelada','r_nova']]},
+  timtipo: {q:'A linha TIM dele é pré-pago ou controle?', hint:'Pergunte: "Você coloca recarga ou paga um valor fixo todo mês?"',
+    opts:[['Pré-pago (faz recarga)','timcpf'],['Controle ou pós (paga todo mês)','r_timctrl'],['Não sabe','r_timdesc']]},
+  ddd: {q:'A linha é DDD 67 e está no CPF dele?', hint:'Portabilidade exige mesmo DDD e mesmo CPF titular.',
+    opts:[['Sim, DDD 67 e no CPF dele','r_port'],['Outro DDD ou está no CPF de outra pessoa','r_portno']]}
+};
+const results = {
+  r_port:{t:'ok',h:'Portabilidade',p:'Ele traz o número que já usa e passa a pagar R$ 34,99 com tudo ilimitado.',
+    li:['Recebe um chip novo com número temporário','A portabilidade conclui em até 72h e o número dele entra no lugar','Se tiver fidelidade na operadora atual, ela pode cobrar multa. Vale perguntar'],
+    say:'Você mantém o mesmo número, ganha até 36GB, ligações ilimitadas e ainda recebe R$ 3,50 de volta todo mês no app. E sem fidelidade.'},
+  r_portno:{t:'warn',h:'Portabilidade não dá. Ofereça nova linha',p:'Com outro DDD ou titular diferente, a portabilidade é bloqueada.',
+    li:['Se a linha está no CPF de outra pessoa, essa pessoa pode contratar, se for cliente ativa','Nova linha ativa em poucos minutos, chip físico ou eSIM'],
+    say:'Nesse número a troca não é possível, mas consigo ativar uma linha nova agora, já com o plano.'},
+  r_nova:{t:'ok',h:'Nova linha',p:'Caminho mais rápido: ativação em poucos minutos.',
+    li:['Até 5 linhas por CPF','Chip físico ou eSIM, se o celular for compatível','Ótimo para filhos maiores de 18, segundo chip ou trabalho'],
+    say:'Você sai daqui com a linha funcionando, até 36GB e ligações ilimitadas por R$ 34,99.'},
+  r_migra:{t:'ok',h:'Migração de TIM Pré',p:'Cliente TIM Pré-pago pode migrar para o plano. Mesmo número, sem troca de operadora.',
+    li:['A linha precisa estar ativa na TIM e no mesmo CPF em que foi ativada','Não entregue chip novo: o chip que ele já usa vira controle','Confirme o número da linha com o cliente antes de digitar. Número errado gera erro','Dúvida no processo: procure o Executivo TIM'],
+    say:'Você continua com seu número TIM, para de se preocupar com recarga e paga R$ 34,99 com até 36GB e ligação ilimitada. E ainda recebe R$ 3,50 de volta todo mês.'},
+  r_timctrl:{t:'warn',h:'TIM Controle não migra',p:'De controle para controle a migração não é permitida.',
+    li:['Ofereça uma linha nova para ele ou para alguém da família 18+','Compare: se ele paga mais caro hoje, a linha nova pode virar a principal'],
+    say:'No seu número atual essa troca não é possível, mas consigo ativar uma linha nova com esse plano exclusivo agora.'},
+  r_timcpf:{t:'warn',h:'Linha em outro CPF',p:'A migração só acontece no mesmo CPF em que a linha pré foi ativada.',
+    li:['Se o dono da linha for cliente ativo e 18+, ele mesmo pode contratar','Se não, ofereça uma linha nova no CPF de quem está sendo atendido'],
+    say:'Essa linha está no nome de outra pessoa, então a troca precisa ser feita no CPF dela. Para você, consigo ativar uma linha nova agora.'},
+  r_timdesc:{t:'warn',h:'Descubra o tipo da linha',p:'A regra muda conforme o tipo. Uma pergunta resolve.',
+    li:['Pré-pago: ele coloca crédito/recarga','Controle: paga um valor fixo todo mês, em boleto ou cartão','Se ainda tiver dúvida, ele confere no app Meu TIM'],
+    say:'Você coloca recarga no seu chip ou paga uma conta fixa todo mês?'},
+  r_semcartao:{t:'no',h:'Ainda não dá para contratar',p:'O pagamento é só no cartão de crédito, de forma recorrente.',
+    li:['Pergunte se alguém da família pode usar o cartão (cartão de terceiro é permitido)','Se não tiver agora, anote para retornar depois'],
+    say:'O plano funciona só no cartão de crédito, mas pode ser o cartão de alguém da sua família. Tem essa opção?'},
+  r_menor:{t:'no',h:'Menor de idade não contrata',p:'A linha precisa estar no CPF de alguém com 18 anos ou mais, ou emancipado.',
+    li:['O titular pode contratar uma linha no CPF dele e entregar para o filho usar'],
+    say:'A linha fica no CPF de um adulto. Se você contratar no seu nome, seu filho pode usar o chip normalmente.'},
+  r_inativo:{t:'warn',h:'Primeiro regularize a matrícula',p:'Com a matrícula inativa a oferta não aparece. Ao concluir a refiliação no CTN, a tela do plano TIM é exibida na sequência.',
+    li:['Faça a refiliação e já apresente o plano na mesma conversa'],
+    say:'Reativando seu Cartão de TODOS hoje, você já sai com acesso a esse plano exclusivo da TIM.'},
+  r_novo:{t:'ok',h:'Venda o Cartão de TODOS primeiro',p:'O plano é exclusivo para clientes. Ao finalizar a filiação, a aba Venda Plano TIM aparece na hora.',
+    li:['Use o plano TIM como argumento extra de fechamento da filiação'],
+    say:'Além dos descontos em saúde, quem é Cartão de TODOS tem um plano TIM exclusivo de R$ 34,99 com até 36GB de internet.'}
+};
+const order = ['start','idade','cartao','operadora','timtipo'];
+let simHist = [];
+function renderSim(key){
+  const box = document.getElementById('simBox');
+  const stepIdx = simHist.length;
+  const prog = order.map((_,i)=>`<i class="${i < stepIdx + (results[key]?0:1) ? 'on':''}"></i>`).join('');
+  if(results[key]){
+    const r = results[key];
+    box.innerHTML = `<div class="progress">${order.map(()=>'<i class="on"></i>').join('')}</div>
+      <div class="result ${r.t}"><h3>${r.h}</h3><p>${r.p}</p><ul>${r.li.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="say"><b>Como falar com o cliente</b>${r.say}</div>
+      <div class="row"><button class="btn ghost" id="simBack">Voltar uma pergunta</button><button class="btn" id="simReset">Simular outro cliente</button></div>`;
+    document.getElementById('simReset').onclick = ()=>{simHist=[];renderSim('start')};
+    document.getElementById('simBack').onclick = ()=>{renderSim(simHist.pop())};
+    return;
+  }
+  const n = flow[key];
+  box.innerHTML = `<div class="progress">${prog}</div><p class="q">${n.q}</p><p class="hint">${n.hint}</p>
+    <div class="opts">${n.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o[0]}</button>`).join('')}</div>
+    ${simHist.length?'<div class="row"><button class="btn ghost" id="simBack">Voltar</button></div>':''}`;
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{simHist.push(key);renderSim(n.opts[b.dataset.i][1])});
+  const back = document.getElementById('simBack'); if(back) back.onclick=()=>renderSim(simHist.pop());
+}
+renderSim('start');
+
+/* ---------- Objeções ---------- */
+const objs = [
+  ['Já tenho plano e estou satisfeito.','Que bom. Posso só comparar com você? Quanto você paga hoje e quantos GB tem? Aqui são até 36GB, redes sociais sem descontar, ligação ilimitada e R$ 3,50 de volta todo mês, por R$ 34,99.','Peça o valor atual. A comparação concreta convence mais que argumento.'],
+  ['Não tenho cartão de crédito.','Sem problema, pode ser o cartão de alguém da sua família. E a cobrança é igual à de streaming: só os R$ 34,99 do mês, não compromete o limite inteiro.','Cartão de terceiro é permitido pela regra do plano.'],
+  ['Tenho medo de ficar preso.','O plano não tem fidelidade. Se um dia não fizer sentido, você cancela sem multa.',''],
+  ['Não quero perder meu número.','Você não perde. Fazemos a portabilidade: você recebe um chip com número temporário e, em até 72h, seu número de sempre passa para ele.','Confirme antes: mesmo DDD e linha no CPF do cliente.'],
+  ['Meu número já é TIM.','Ótimo. Se ele for pré-pago, você migra para esse plano mantendo o mesmo número. Se já for controle, consigo uma linha nova com esse plano pra você ou pra alguém da família.','Pré-pago migra. Controle para controle não migra.'],
+  ['Prefiro continuar na recarga, gasto pouco.','Faz a conta comigo: quanto você coloca de recarga por mês? Aqui são R$ 34,99 com até 36GB, ligação ilimitada, redes sociais sem descontar e R$ 3,50 de volta. E sem fidelidade, se não gostar, cancela.','Argumento ideal para TIM Pré: fim da preocupação com recarga acabando.'],
+  ['O sinal da TIM aqui é ruim.','Vamos olhar juntos o mapa de cobertura da TIM no seu bairro, aí você decide com segurança.','Mostre o mapa no celular. Transparência evita cancelamento depois.'],
+  ['Tenho fidelidade na minha operadora.','Dá para trazer mesmo assim, mas a operadora atual pode cobrar multa. Vale ver quanto falta e quanto você economiza aqui por mês.',''],
+  ['Vou pensar e volto depois.','Claro. Só te aviso que essa condição de Black Friday pode sair do ar a qualquer momento, e a ativação leva poucos minutos. Fazendo agora, você já sai usando. O que falta para você decidir?','Descubra a objeção real por trás do "vou pensar". Se não fechar, anote o contato e retorne ainda hoje.'],
+  ['Os 36GB são para sempre?','Os 20GB são do plano. Os 10GB de bônus promo e os 6GB de bônus especial valem por 12 meses a partir da ativação. É o ano inteiro com até 36GB por R$ 34,99.','Seja transparente sobre a validade dos bônus. Evita reclamação e cancelamento depois.'],
+  ['R$ 34,99 é caro pra mim.','Vamos fazer a conta juntos? Com o cashback de R$ 3,50 a partir do 2º mês, no primeiro ano sai em média R$ 31,78 por mês, com até 36GB, ligação ilimitada e redes sociais sem descontar. Quanto você gasta hoje?','Abra a aba Calculadora e preencha com o cliente.'],
+  ['E se der problema na linha, quem me atende?','O atendimento é direto com a TIM, pelo app Meu TIM ou pelo *144. Já te ajudo a baixar o app antes de sair.','A franquia não dá suporte de telefonia. Deixe isso claro na venda.']
+];
+document.getElementById('objList').innerHTML = objs.map((o,i)=>`
+  <div class="obj" open-state="0">
+    <button aria-expanded="false" aria-controls="oa${i}"><q>${o[0]}</q><span class="plus" aria-hidden="true">+</span></button>
+    <div class="ans" id="oa${i}"><div class="say"><b>Resposta</b>${o[1]}</div>${o[2]?`<p class="tip">${o[2]}</p>`:''}</div>
+  </div>`).join('');
+document.querySelectorAll('.obj button').forEach(b=>b.onclick=()=>{
+  const card=b.parentElement, open=card.getAttribute('open-state')==='1';
+  card.setAttribute('open-state', open?'0':'1'); b.setAttribute('aria-expanded', String(!open));
+});
+
+/* ---------- Passo a passo ---------- */
+const steps = [
+  {h:'Abra a oferta no CTN', li:[
+    'Nova filiação: ao concluir, aparece a aba <span class="path">Venda Plano TIM</span>',
+    'Refiliação: a tela do plano aparece ao finalizar',
+    'Cliente já ativo: <span class="path">Dados do filiado › Serviços › Adicionar Serviços › OFERTA TIM</span>',
+    'Clique em Contratar agora. Se recusar, Fechar'], alert:'A matrícula precisa estar com status Ativo.'},
+  {h:'Confira os dados pessoais', li:[
+    'Digite o CPF do titular ou do dependente 18+',
+    'O cadastro carrega sozinho. Revise e complete os campos obrigatórios',
+    'Avançar']},
+  {h:'Escolha a modalidade', li:[
+    '<b>Ativação</b>: linha nova, até 5 por CPF',
+    '<b>Portabilidade</b>: móvel para móvel, linha ativa, mesmo DDD e mesmo CPF'], alert:'TIM Pré-pago migra mantendo número e chip, no mesmo CPF da ativação. Confirme o número da linha com o cliente antes de digitar. TIM Controle não migra: ofereça linha nova.'},
+  {h:'Defina o chip', li:[
+    '<b>Migração de TIM Pré</b>: não usa chip novo. Pule a entrega de chip, o chip atual vira controle',
+    '<b>Físico</b>: digite o ICCID impresso no chip TIM da unidade',
+    '<b>eSIM</b>: confira a compatibilidade do celular no próprio CTN',
+    'Avançar'], alert:'Chip perdido ou mal usado custa R$ 6,00 para a unidade. Guarde em local seguro.'},
+  {h:'Revise e confirme o pedido', li:[
+    'Confira tudo com o cliente e edite se precisar',
+    'Garanta telefone e e-mail corretos',
+    'Fechar Pedido e Confirmar. Depois disso não dá para alterar']},
+  {h:'Pagamento', li:[
+    'Clique em Realizar Pagamento',
+    'O cliente lê o QR Code e digita o cartão no próprio celular',
+    'Avise que o débito é mensal na fatura, como TIM*número'], alert:'Se o pagamento ficar pendente, o link fica disponível depois no detalhe da venda.'},
+  {h:'Pedido criado', li:[
+    'A linha fica ativa em poucos minutos, em até 2h',
+    'eSIM: é a hora de o cliente escanear o QR Code']},
+  {h:'Onboarding do cliente', li:[
+    'Ajude a baixar o app Meu TIM pelos QR Codes da tela',
+    'Explique que o suporte da linha é com a TIM (*144 e Meu TIM)',
+    'Lembre do cashback de R$ 3,50 no app CDT a partir do 2º mês']},
+  {h:'Acompanhe a venda', li:[
+    'Menu <span class="path">Relatórios Vendas de Planos TIM</span>',
+    'Aguardando Pagamento, Aguardando Operadora, Aprovado ou Cancelado',
+    'Cancelado tem estorno automático'], alert:'Dúvida no sistema? Use o ícone do WhatsApp na tela da oferta. Dúvida sobre migração: procure o Executivo TIM.'}
+];
+let cur = 0;
+const dots = document.getElementById('dots');
+dots.innerHTML = steps.map((_,i)=>`<button class="dot" data-i="${i}" aria-label="Passo ${i+1}">${i+1}</button>`).join('');
+dots.querySelectorAll('.dot').forEach(d=>d.onclick=()=>{cur=+d.dataset.i;renderStep()});
+function renderStep(){
+  const s = steps[cur];
+  document.getElementById('stepBox').innerHTML = `<h3>${s.h}</h3><ul>${s.li.map(x=>`<li>${x}</li>`).join('')}</ul>${s.alert?`<div class="alert">${s.alert}</div>`:''}`;
+  dots.querySelectorAll('.dot').forEach((d,i)=>{d.className='dot'+(i===cur?' on':i<cur?' done':'')});
+  document.getElementById('prevStep').disabled = cur===0;
+  document.getElementById('prevStep').style.visibility = cur===0?'hidden':'visible';
+  document.getElementById('nextStep').textContent = cur===steps.length-1?'Começar de novo':'Próximo passo';
+}
+document.getElementById('prevStep').onclick=()=>{if(cur>0){cur--;renderStep()}};
+document.getElementById('nextStep').onclick=()=>{cur = cur===steps.length-1?0:cur+1;renderStep()};
+renderStep();
+
+/* ---------- Quiz ---------- */
+const quiz = [
+  ['Qual é o valor e a forma de pagamento?',['R$ 34,99 no cartão de crédito, recorrente','R$ 34,99 no boleto','R$ 34,99 no Pix ou cartão'],0,'Pagamento só no cartão de crédito, com cobrança recorrente mensal.'],
+  ['Um cliente TIM Pré-pago quer o plano. O que fazer?',['Ofereço a migração, mantendo o mesmo número','Digo que cliente TIM não pode','Faço portabilidade de TIM para TIM'],0,'TIM Pré-pago agora pode migrar para o plano, com o mesmo número.'],
+  ['Na migração de TIM Pré, o cliente leva chip novo?',['Sim, sempre leva chip novo','Não, o chip que ele já usa vira controle'],1,'Na migração não se usa chip novo. O próprio chip do cliente passa a ser Plano Controle.'],
+  ['E se o cliente já for TIM Controle?',['Migra normalmente','Não migra de controle para controle. Ofereço linha nova'],1,'Controle para controle não é permitido. A saída é uma linha nova.'],
+  ['Cliente com linha DDD 11 quer portar para o plano aqui. Pode?',['Sim, portabilidade vale para qualquer DDD','Não, só no mesmo DDD e na área da unidade'],1,'A portabilidade exige o mesmo DDD e deve estar dentro da área da franquia.'],
+  ['Quantas linhas um CPF pode ativar?',['1','3','5'],2,'Até 5 linhas por CPF.'],
+  ['Quando o cliente começa a receber o cashback?',['Na hora da contratação','A partir do pagamento da 2ª mensalidade','Depois de 6 meses'],1,'R$ 3,50 por mês na Wallet do app CDT, a partir da 2ª mensalidade, com cliente ativo na TIM e no CDT.'],
+  ['O cliente não tem cartão de crédito. E agora?',['Não tem como vender','Pode usar o cartão de outra pessoa','Pode pagar em dinheiro na unidade'],1,'Cartão de crédito de terceiro é permitido.'],
+  ['Depois da venda, quem dá suporte para a linha?',['A unidade do Cartão de TODOS','A TIM, pelo Meu TIM e *144'],1,'Após a entrega do chip, o suporte é exclusivo da TIM.'],
+  ['Na Black Friday, como se formam os 36GB?',['36GB fixos do plano','20GB do plano + 10GB bônus promo + 6GB bônus especial','30GB do plano + 6GB de bônus'],1,'20GB do plano, mais 10GB de bônus promo e 6GB de bônus especial.'],
+  ['Por quanto tempo valem os bônus da Black Friday?',['1 mês','12 meses a partir da ativação','Para sempre'],1,'Os bônus de 10GB e 6GB valem por 12 meses, contados da data de ativação.'],
+  ['O WhatsApp ilimitado inclui chamadas de voz e vídeo?',['Sim, tudo ilimitado','Não, chamadas de voz e vídeo descontam da internet'],1,'O uso ilimitado não vale para chamadas de voz e vídeo no WhatsApp.']
+];
+let qi=0, pts=0;
+function renderQuiz(){
+  const box=document.getElementById('quizBox');
+  if(qi>=quiz.length){
+    const msg = pts===quiz.length?'Pronto para vender.':pts>=quiz.length-2?'Quase lá. Revise o que errou.':'Vale passar de novo pelo Simulador e pelas Dúvidas.';
+    box.innerHTML=`<p class="hint">Seu resultado</p><div class="score">${pts}/${quiz.length}</div><p>${msg}</p><div class="row"><button class="btn" id="qr">Fazer de novo</button></div>`;
+    document.getElementById('qr').onclick=()=>{qi=0;pts=0;renderQuiz()};
+    return;
+  }
+  const [q,opts,right,exp]=quiz[qi];
+  box.innerHTML=`<div class="progress">${quiz.map((_,i)=>`<i class="${i<=qi?'on':''}"></i>`).join('')}</div>
+    <p class="hint">Pergunta ${qi+1} de ${quiz.length}</p><p class="q">${q}</p>
+    <div>${opts.map((o,i)=>`<button class="qopt" data-i="${i}">${o}</button>`).join('')}</div><div id="qx"></div>`;
+  box.querySelectorAll('.qopt').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i; if(i===right) pts++;
+    box.querySelectorAll('.qopt').forEach((x,j)=>{x.disabled=true; if(j===right)x.classList.add('right'); else if(j===i)x.classList.add('wrong')});
+    document.getElementById('qx').innerHTML=`<div class="explain"><b>${i===right?'Isso.':'Não é bem assim.'}</b> ${exp}</div>
+      <div class="row"><button class="btn" id="qn">${qi===quiz.length-1?'Ver resultado':'Próxima'}</button></div>`;
+    document.getElementById('qn').onclick=()=>{qi++;renderQuiz()};
+  });
+}
+renderQuiz();
+
+/* ---------- FAQ ---------- */
+const faq = [
+  ['O que é a oferta Black Friday?','TIM Controle exclusivo para clientes Cartão de TODOS com até 36GB por R$ 34,99/mês no cartão de crédito: 20GB do plano + 10GB de bônus promo + 6GB de bônus especial, além das redes sociais incluídas.'],
+  ['Os 36GB valem para sempre?','Não. Os 20GB são do plano. Os bônus de 10GB e 6GB valem por 12 meses a partir da data de ativação.'],
+  ['Até quando vale a Black Friday?','A promoção vale por tempo indeterminado, mas pode ser suspensa a qualquer momento pela TIM, sem aviso prévio. Venda enquanto está no ar.'],
+  ['Os 36GB valem para portabilidade e migração de Pré?','A peça da campanha não separa por modalidade. Confira na tela da oferta no CTN ou com o Executivo TIM antes de prometer os 36GB nesses casos.'],
+  ['Onde está o regulamento da oferta?','No site da TIM: tim.com.br/regulamento-parceria-express. O regulamento do cashback está no site do Cartão de TODOS, na Ajuda sobre o plano TIM.'],
+  ['O plano é vendido em loja TIM?','Não. É exclusivo para clientes Cartão de TODOS e só é vendido nas franquias.'],
+  ['Dependente pode contratar?','Sim, se estiver vinculado a uma matrícula ativa e tiver 18 anos ou mais. Use o CPF do dependente.'],
+  ['Dá para vender para CNPJ?','Não. O plano é só para pessoa física.'],
+  ['Qual o prazo de ativação?','Linha nova: entre 5 e 10 minutos, podendo levar até 2h. Portabilidade: até 72 horas.'],
+  ['Como funciona a portabilidade com chip?','O cliente recebe um chip novo com número temporário. Quando a portabilidade conclui, o número dele substitui o temporário automaticamente.'],
+  ['Cliente com fidelidade em outra operadora pode portar?','Pode, mas a operadora de origem pode cobrar multa por quebra de contrato.'],
+  ['Como aparece na fatura do cartão?','Como TIM* seguido do número da linha. Exemplo: TIM*67999999999.'],
+  ['Se o cartão ficar sem limite, o que acontece?','O plano não renova e o cliente perde o cashback até regularizar.'],
+  ['Inadimplente no CDT e em dia na TIM?','Continua com o plano, mas não recebe o cashback.'],
+  ['Inadimplente na TIM e em dia no CDT?','A linha fica limitada e o cliente perde o cashback.'],
+  ['O cashback não caiu. O que orientar?','O cliente deve abrir a seção Ajuda (?) no app Cartão de TODOS.'],
+  ['Como ver a cobertura da TIM?','Pelo mapa de cobertura no site da TIM. Mostre ao cliente antes de fechar, se ele tiver dúvida.'],
+  ['Posso trocar chip com outra unidade ou vender chip avulso?','Não. Os chips ficam guardados com o gerente. Perda ou mau uso custa R$ 6,00 por chip.'],
+  ['Posso criar minha própria arte para divulgar?','Não. As peças de divulgação devem ser só as da plataforma Conexão Marketing (GT7), aprovadas pela TIM.'],
+  ['Estou sem acesso à venda no CTN.','Confirme se seu perfil está autorizado e fale com a gestão para solicitar a liberação.'],
+  ['Cliente TIM Pré-pago pode migrar?','Sim. A migração já está disponível no sistema, mantendo o mesmo número e o mesmo chip.'],
+  ['Quais as regras da migração de TIM Pré?','Somente linha pré-paga, ativa na TIM e no mesmo CPF em que foi ativada.'],
+  ['Na migração eu entrego chip novo?','Não. O chip que o cliente já usa vira Plano Controle. Não gaste chip do estoque nessa venda.'],
+  ['Qual o erro mais comum na migração?','Digitar o número da linha errado. Confirme o número com o cliente antes de preencher. Uma dica: peça para ele ligar para o seu celular e confira.'],
+  ['A linha pré está no CPF do marido ou de outra pessoa. Pode migrar?','Não no CPF de quem está sendo atendido. A migração é no mesmo CPF da ativação. O dono da linha pode contratar, se for cliente ativo e 18+.'],
+  ['A linha pré está bloqueada por falta de recarga. Migra?','A linha precisa estar ativa na TIM. Se estiver cancelada, ofereça uma linha nova.'],
+  ['Quem me ajuda com dúvida na migração?','O Executivo TIM da regional. Para dúvidas de sistema na hora da venda, use também o ícone do WhatsApp na tela da oferta.'],
+  ['Cliente TIM Controle pode migrar?','Não. Controle para controle não é permitido. Ofereça uma linha nova.'],
+  ['Cliente sem matrícula ativa pode contratar?','Não. Primeiro filie ou refilie. Ao concluir, a oferta TIM aparece na tela.'],
+  ['O plano tem ligação de vídeo no WhatsApp ilimitada?','Não. Chamadas de voz e vídeo no WhatsApp consomem a internet. Instagram e Facebook também não incluem lives e vídeo chamadas.'],
+  ['Posso vender o plano para alguém de outra cidade?','A portabilidade precisa ser do mesmo DDD e dentro da área da unidade. Para outro DDD, oriente a procurar a unidade da região.'],
+  ['O cliente pode usar eSIM?','Sim, se o celular for compatível. Confira no próprio CTN antes de escolher. No final, ele escaneia o QR Code para habilitar.'],
+  ['O cliente pagou mas a venda não aparece aprovada.','Veja o status em Relatórios Vendas de Planos TIM. Aguardando Operadora é normal por um tempo. Se ficar travado, acione o suporte pelo WhatsApp da tela.'],
+  ['O pagamento não foi feito na hora. Perdi a venda?','Não. Com status Aguardando Pagamento, o link fica disponível no detalhe da venda para enviar ao cliente.'],
+  ['A venda conta no Time Premiado?','O Time Premiado é a plataforma de incentivo dos vendedores TIM. Veja a aba Time Premiado para acesso e regras.']
+];
+const faqList=document.getElementById('faqList');
+function renderFaq(term=''){
+  const t=term.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const items=faq.filter(([q,a])=>(q+' '+a).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(t));
+  faqList.innerHTML = items.length ? items.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')
+    : `<p class="empty">Nada encontrado para "${term}". Tente outra palavra ou pergunte à coordenação.</p>`;
+}
+document.getElementById('faqSearch').addEventListener('input',e=>renderFaq(e.target.value));
+renderFaq();
+
+/* ---------- Utilidades ---------- */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const brl = v => 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+let toastT;
+function toast(msg){
+  let el = document.querySelector('.toast');
+  if(!el){ el = document.createElement('div'); el.className = 'toast'; el.setAttribute('role','status'); document.body.appendChild(el); }
+  el.textContent = msg; el.classList.add('on');
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 1800);
+}
+async function copyText(txt){
+  try{ await navigator.clipboard.writeText(txt); }
+  catch(e){
+    const ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(_){} ta.remove();
+  }
+  toast('Copiado. É só colar.');
+}
+function segInit(id, cb){
+  const box = document.getElementById(id);
+  box.querySelectorAll('button').forEach(b => b.onclick = () => {
+    box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    cb(b.dataset.v);
+  });
+}
+
+/* ---------- Meta do dia ---------- */
+const today = new Date().toLocaleDateString('sv-SE');
+const MKEY = 'timnamao-meta';
+let M = store.get(MKEY, null);
+if(!M || M.date !== today) M = { date: today, goal: (M && M.goal) || 10, end: (M && M.end) || '18:00', log: [] };
+const LBL = { nova: 'Nova linha', port: 'Portabilidade', mig: 'Migração Pré' };
+const goalIn = document.getElementById('mGoalIn'), endIn = document.getElementById('mEnd');
+goalIn.value = M.goal; endIn.value = M.end;
+function renderMeta(){
+  const n = M.log.length, g = Math.max(1, +M.goal || 10), left = Math.max(0, g - n);
+  document.getElementById('mCount').textContent = n;
+  document.getElementById('mGoal').textContent = 'de ' + g + ' vendas';
+  document.getElementById('ring').style.setProperty('--p', Math.min(100, n / g * 100));
+  document.getElementById('ring').setAttribute('aria-label', n + ' de ' + g + ' vendas');
+  const titles = n === 0 ? 'Bora para a primeira venda!' : left === 0 ? 'Meta batida!' :
+    left <= 2 ? 'Falta pouco: só ' + left + '!' : n >= g / 2 ? 'Metade do caminho. Não tira o pé!' : 'Faltam ' + left + ' vendas. Cada atendimento conta.';
+  document.getElementById('mTitle').textContent = titles;
+  const [hh, mm] = (M.end || '18:00').split(':').map(Number);
+  const end = new Date(); end.setHours(hh, mm, 0, 0);
+  const mins = Math.round((end - new Date()) / 60000);
+  let pace;
+  if(left === 0) pace = 'Cada venda a mais agora é recorde do time.';
+  else if(mins <= 0) pace = 'Expediente encerrado. Faltaram <b>' + left + '</b>. Amanhã a gente vira o jogo.';
+  else {
+    const h = Math.floor(mins / 60), m = mins % 60, every = Math.floor(mins / left);
+    pace = 'Faltam <b>' + (h ? h + 'h' : '') + (m ? String(m).padStart(h ? 2 : 1, '0') + 'min' : '') + '</b> até o encerramento. Ritmo necessário: <b>1 venda a cada ' +
+      (every >= 60 ? Math.floor(every / 60) + 'h' + (every % 60 ? String(every % 60).padStart(2, '0') : '') : every + ' min') + '</b>.';
+  }
+  document.getElementById('mPace').innerHTML = pace;
+  const c = { nova: 0, port: 0, mig: 0 }; M.log.forEach(x => c[x.k]++);
+  document.getElementById('mTally').innerHTML = Object.keys(c).map(k => `<span>${LBL[k]}: ${c[k]}</span>`).join('') +
+    (n ? `<span>Última às ${M.log[n - 1].t}</span>` : '');
+  document.getElementById('mDone').classList.toggle('on', left === 0);
+  document.getElementById('mUndo').disabled = !n;
+}
+document.querySelectorAll('.add').forEach(b => b.onclick = () => {
+  const before = M.log.length;
+  M.log.push({ k: b.dataset.k, t: new Date().toTimeString().slice(0, 5) });
+  store.set(MKEY, M); renderMeta();
+  toast(M.log.length === +M.goal ? 'META BATIDA! Parabéns, time!' : '+1 ' + LBL[b.dataset.k] + '. Boa!');
+  if(before < M.goal && M.log.length >= M.goal && navigator.vibrate) navigator.vibrate([80, 60, 80]);
+});
+document.getElementById('mUndo').onclick = () => { M.log.pop(); store.set(MKEY, M); renderMeta(); };
+goalIn.onchange = () => { M.goal = Math.max(1, Math.min(99, +goalIn.value || 10)); goalIn.value = M.goal; store.set(MKEY, M); renderMeta(); };
+endIn.onchange = () => { M.end = endIn.value || '18:00'; store.set(MKEY, M); renderMeta(); };
+renderMeta(); setInterval(renderMeta, 60000);
+
+const dayItems = [
+  'Acesso à venda no CTN funcionando',
+  'Chips TIM separados com o gerente (ICCID à mão)',
+  'Celular com a aba Calculadora aberta para mostrar ao cliente',
+  'Roteiro de WhatsApp copiado para os retornos',
+  'Lista dos clientes que pediram retorno ontem'
+];
+const DKEY = 'timnamao-check-' + today;
+const dChk = store.get(DKEY, []);
+document.getElementById('dayCheck').innerHTML = dayItems.map((x, i) =>
+  `<li><input type="checkbox" id="dc${i}" ${dChk.includes(i) ? 'checked' : ''}><label for="dc${i}">${x}</label></li>`).join('');
+document.querySelectorAll('#dayCheck input').forEach((el, i) => el.onchange = () => {
+  const s = new Set(store.get(DKEY, [])); el.checked ? s.add(i) : s.delete(i); store.set(DKEY, [...s]);
+});
+
+/* ---------- Calculadora ---------- */
+const PRICE = 34.99, CB = 3.5, GB = 36;
+const YEAR = PRICE * 12 - CB * 11, AVG = YEAR / 12;
+let cType = 'recarga', lastArg = '';
+segInit('cType', v => {
+  cType = v;
+  document.getElementById('cSpendWrap').style.display = v === 'nenhum' ? 'none' : '';
+  document.getElementById('cGbWrap').style.display = v === 'nenhum' ? 'none' : '';
+  document.getElementById('cSpendLbl').textContent = v === 'recarga' ? 'Quanto coloca de recarga por mês? (R$)' : 'Quanto paga no plano hoje? (R$)';
+  renderCalc();
+});
+function renderCalc(){
+  const spend = parseFloat(String(document.getElementById('cSpend').value).replace(',', '.')) || 0;
+  const gb = parseFloat(String(document.getElementById('cGb').value).replace(',', '.')) || 0;
+  const out = document.getElementById('cOut'), say = document.getElementById('cSay');
+  let k = [], arg;
+  if(cType === 'nenhum'){
+    k = [['blue', 'Até 36GB', 'de internet por mês'], ['good', brl(AVG), 'por mês em média no 1º ano, com cashback'], ['', 'Ilimitado', 'ligações e SMS']];
+    arg = `Com o TIM Controle exclusivo do Cartão de TODOS você tem até 36GB de internet, redes sociais incluídas e ligações ilimitadas por R$ 34,99 no cartão. Com o cashback de R$ 3,50, sai em média ${brl(AVG)} por mês no primeiro ano. E sem fidelidade.`;
+  } else if(!spend){
+    out.innerHTML = '<p class="hint" style="margin:0">Digite quanto o cliente gasta hoje para ver a comparação.</p>';
+    say.innerHTML = '<b>Pergunta para fazer agora</b>' + (cType === 'recarga' ? '"Quanto você coloca de recarga por mês, mais ou menos?"' : '"Quanto você paga no seu plano hoje?"');
+    lastArg = ''; return;
+  } else {
+    const diffYear = spend * 12 - YEAR, diffMonth = spend - PRICE;
+    const mult = gb > 0 ? GB / gb : 0;
+    k.push(diffYear > 0 ? ['good', brl(diffYear), 'de economia no 1º ano'] : ['blue', brl(Math.abs(spend - AVG)), 'a mais por mês, em média']);
+    k.push(mult >= 1.2 ? ['blue', (mult >= 10 ? Math.round(mult) : mult.toFixed(1).replace('.', ',')) + 'x', 'mais internet que hoje'] : ['blue', 'Até 36GB', 'de internet por mês']);
+    k.push(['', brl(AVG), 'custo médio/mês no 1º ano']);
+    const hoje = cType === 'recarga' ? `Hoje você coloca ${brl(spend)} de recarga` : `Hoje você paga ${brl(spend)}`;
+    const gbTxt = gb > 0 ? ` com ${gb}GB` : '';
+    if(diffYear > 0){
+      arg = `${hoje}${gbTxt}. Aqui são R$ 34,99 com até 36GB, ligações ilimitadas e redes sociais sem descontar. Com o cashback de R$ 3,50, você economiza ${brl(diffYear)} no primeiro ano${mult >= 1.2 ? ` e ainda tem ${mult >= 10 ? Math.round(mult) : mult.toFixed(1).replace('.', ',')} vezes mais internet` : ''}. E sem fidelidade.`;
+    } else {
+      arg = `${hoje}${gbTxt}. Por ${brl(Math.max(0, AVG - spend))} a mais por mês, em média, você passa a ter até 36GB, ligações ilimitadas, redes sociais sem descontar e nunca mais fica sem crédito no meio do mês. E sem fidelidade: se não gostar, cancela.`;
+    }
+  }
+  out.innerHTML = k.map(([c, b, s]) => `<div class="kpi ${c}"><b>${b}</b><span>${s}</span></div>`).join('');
+  say.innerHTML = '<b>Como falar com o cliente</b>' + arg;
+  lastArg = arg;
+}
+['cSpend', 'cGb'].forEach(id => document.getElementById(id).addEventListener('input', renderCalc));
+document.getElementById('cCopy').onclick = () => lastArg ? copyText(lastArg) : toast('Preencha os campos primeiro.');
+document.getElementById('cClear').onclick = () => { document.getElementById('cSpend').value = ''; document.getElementById('cGb').value = ''; renderCalc(); };
+renderCalc();
+
+/* ---------- Abordagem ---------- */
+const scripts = [
+  ['presencial', 'Pitch de 30 segundos', 'Use no fim de qualquer atendimento',
+   'Antes de você ir: por ser cliente Cartão de TODOS, você tem direito a um TIM Controle exclusivo que não é vendido na loja da TIM. Nessa Black Friday são até 36GB de internet, redes sociais incluídas e ligação ilimitada por R$ 34,99 no cartão, sem fidelidade. Você usa qual operadora hoje?'],
+  ['presencial', 'Gancho na recepção', 'Enquanto o cliente espera ou ao concluir o atendimento',
+   'Enquanto o sistema carrega: você já viu o plano TIM que saiu só para cliente Cartão de TODOS? Até 36GB por R$ 34,99. Me conta, quanto você gasta de celular hoje?'],
+  ['presencial', 'Para cliente TIM Pré', 'Quando ele disser que é TIM e faz recarga',
+   'Então você não precisa nem trocar de chip. Seu número TIM Pré vira Controle aqui mesmo, no mesmo chip: até 36GB, ligação ilimitada e nunca mais fica sem crédito no meio do mês, por R$ 34,99. Vamos fazer agora?'],
+  ['telefone', 'Fim da ligação de atendimento', 'Depois de resolver o motivo do contato',
+   'Resolvido! Aproveitando que estamos falando: como cliente Cartão de TODOS você tem um plano TIM exclusivo da Black Friday, até 36GB por R$ 34,99 com ligação ilimitada. Posso te explicar em um minuto?'],
+  ['telefone', 'Ligação ativa (retorno)', 'Para quem demonstrou interesse e não fechou',
+   'Oi, [nome], aqui é [seu nome] do Cartão de TODOS. Falamos do plano TIM de R$ 34,99 com até 36GB. Liguei porque essa condição de Black Friday pode sair a qualquer momento e queria garantir pra você. Consegue passar aqui hoje, ou já te adianto o cadastro?'],
+  ['whatsapp', 'Mensagem de oferta', 'Primeiro contato pelo WhatsApp',
+   'Oi, [nome]! Tudo bem? Aqui é [seu nome], do Cartão de TODOS Campo Grande. 😊\n\nTem novidade exclusiva pra você, que é cliente: TIM Controle Black Friday com *até 36GB de internet* + redes sociais incluídas + ligações ilimitadas por *R$ 34,99/mês* no cartão de crédito. Sem fidelidade e ainda com R$ 3,50 de cashback todo mês a partir do 2º mês.\n\nQuer que eu veja se seu número pode vir pra esse plano? É só me responder *QUERO*.'],
+  ['whatsapp', 'Para cliente TIM Pré', 'Quando você já sabe que ele é TIM Pré-pago',
+   'Oi, [nome]! Seu número TIM Pré pode virar *TIM Controle* sem trocar de chip e sem perder o número. 📲\n\nSão *até 36GB*, redes sociais incluídas e ligação ilimitada por *R$ 34,99/mês* no cartão. Chega de recarga acabando no meio do mês!\n\nPosso fazer pra você hoje?'],
+  ['whatsapp', 'Retorno no mesmo dia', 'Para quem disse "vou pensar"',
+   'Oi, [nome]! Passando pra lembrar do TIM Controle de R$ 34,99 com até 36GB. ⏰ É condição de Black Friday e pode sair do ar a qualquer momento.\n\nSe quiser, já deixo tudo pronto e você só confirma o pagamento pelo celular. Posso?'],
+  ['whatsapp', 'Depois da venda', 'Para fortalecer a relação e pedir indicação',
+   'Prontinho, [nome]! Sua linha TIM Controle está ativada. ✅\n\nDicas: baixe o app *Meu TIM* para acompanhar a internet, e o suporte da linha é pelo *144. O cashback de R$ 3,50 cai na Wallet do app Cartão de TODOS a partir do 2º mês.\n\nConhece alguém da família que também é cliente e ia gostar? Me chama que eu ajudo!']
+];
+function renderScripts(f){
+  const list = scripts.filter(s => f === 'todos' || s[0] === f);
+  document.getElementById('sList').innerHTML = list.map((s) => `
+    <div class="script"><header><div><span class="tagc">${s[0][0].toUpperCase() + s[0].slice(1)}</span><h3 style="margin-top:6px">${s[1]}</h3></div>
+      <button class="copy" data-i="${scripts.indexOf(s)}">Copiar</button></header>
+      <p class="hint" style="margin:0 0 8px">${s[2]}</p><p class="txt">${s[3]}</p></div>`).join('');
+  document.querySelectorAll('#sList .copy').forEach(b => b.onclick = () => copyText(scripts[+b.dataset.i][3]));
+}
+segInit('sFilter', renderScripts);
+renderScripts('todos');
+const openers = [
+  ['"Seu celular hoje é de qual operadora?"', 'TIM Pré: migração. Outra operadora: portabilidade. TIM Controle: linha nova.'],
+  ['"Você coloca recarga ou paga conta fixa?"', 'Recarga abre o argumento de nunca ficar sem crédito.'],
+  ['"Quanto você gasta de celular por mês?"', 'Com o valor, abra a Calculadora e mostre a economia.'],
+  ['"Sua internet dura o mês todo?"', 'Se não dura, os 36GB são o argumento principal.'],
+  ['"Alguém na sua casa, maior de 18, precisa de um chip?"', 'Até 5 linhas por CPF. Dependente ativo também pode contratar.']
+];
+document.getElementById('qsList').innerHTML = openers.map(([q, s]) => `<li>${q}<small>${s}</small></li>`).join('');
+</script>
+</body>
+</html>
